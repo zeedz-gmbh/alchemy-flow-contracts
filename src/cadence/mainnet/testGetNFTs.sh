@@ -160,6 +160,11 @@ case $CONTRACT in
   echo "MiamiNFT"
     flow scripts execute getNFTs.cdc --args-json '[{ "type": "Address", "value": "0xe1d5954d03ccb02d" }, { "type": "Dictionary", "value": [{ "key": { "type": "String", "value": "MiamiNFT" }, "value": { "type": "Array", "value": [{ "type": "UInt64", "value": "1" }] } }] }]' --network mainnet
     ;;
+
+  ZeedzINO)
+  echo "ZeedzINO"
+    flow scripts execute getNFTs.cdc --args-json '[{ "type": "Address", "value": "0xe1c34bb70fbb5357" }, { "type": "Dictionary", "value": [{ "key": { "type": "String", "value": "ZeedzINO" }, "value": { "type": "Array", "value": [{ "type": "UInt64", "value": "1" }] } }] }]' --network mainnet
+    ;;
   *)
     echo "Unknown contract"
     ;;
