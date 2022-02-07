@@ -231,5 +231,10 @@ pub fun main(ownerAddress: Address): {String: [UInt64]} {
         ids["TheFabricantS1ItemNFT"] = col.getIDs()
     }
 
+    if let col = owner.getCapability(ZeedzINO.CollectionPublicPath)
+    .borrow<&{ZeedzINO.ZeedzCollectionPublic}>() {
+        ids["ZeedzINO"] = col.getIDs()
+    }
+
     return ids
 }
