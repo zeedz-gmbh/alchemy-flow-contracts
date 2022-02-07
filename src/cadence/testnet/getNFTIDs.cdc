@@ -33,7 +33,6 @@ import TheFabricantMysteryBox_FF1 from 0x716db717f9240d8a
 import DieselNFT from 0x716db717f9240d8a
 import MiamiNFT from 0x716db717f9240d8a
 import ZeedzINO from 0x2dda9145001182e0
-import ZeedzItems from 0x2dda9145001182e0
 
 pub fun main(ownerAddress: Address): {String: [UInt64]} {
     let owner = getAccount(ownerAddress)
@@ -186,11 +185,6 @@ pub fun main(ownerAddress: Address): {String: [UInt64]} {
     if let col = owner.getCapability(ZeedzINO.CollectionPublicPath)
     .borrow<&{ZeedzINO.ZeedzCollectionPublic}>() {
         ids["ZeedzINO"] = col.getIDs()
-    }
-
-    if let col = owner.getCapability(ZeedzItems.CollectionPublicPath)
-    .borrow<&{ZeedzItems.ZeedzItemsCollectionPublic}>() {
-        ids["ZeedzItems"] = col.getIDs()
     }
     
     return ids
