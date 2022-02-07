@@ -33,7 +33,6 @@ import TheFabricantMysteryBox_FF1 from 0x716db717f9240d8a
 import DieselNFT from 0x716db717f9240d8a
 import MiamiNFT from 0x716db717f9240d8a
 import ZeedzINO from 0x2dda9145001182e0
-import ZeedzItems from 0x2dda9145001182e0
 
 pub struct NFTCollection {
     pub let owner: Address
@@ -155,7 +154,6 @@ pub fun main(ownerAddress: Address, ids: {String:[UInt64]}): [NFTData?] {
                 case "DieselNFT": d = getDieselNFT(owner: owner, id: id)
                 case "MiamiNFT": d = getMiamiNFT(owner: owner, id: id)
                 case "ZeedzINO" : d = getZeedzINO(owner: owner, id: id)
-                case "ZeedzItems" : d = getZeedzItems(owner: owner, id: id)
                 default:
                     panic("adapter for NFT not found: ".concat(key))
             }
@@ -1345,46 +1343,6 @@ pub fun getZeedzINO(owner: PublicAccount, id: UInt64): NFTData? {
             "editionCap": nft!.editionCap,
             "rarity": nft!.rarity,
             "carbonOffset": nft!.carbonOffset
-        },
-    )
-}
-
-// https://flow-view-source.com/testnet/account/0x2dda9145001182e0/contract/ZeedzItems
-pub fun getZeedzItems(owner: PublicAccount, id: UInt64): NFTData? {
-    let contract = NFTContract(
-        name: "ZeedzItems",
-        address: 0x2dda9145001182e0,
-        storage_path: "/storage/ZeedzItemsCollection",
-        public_path: "/public/ZeedzItemsCollection",
-        public_collection_name: "ZeedzItems.ZeedzItemsCollectionPublic",
-        external_domain: ""
-    )
-
-    let col = owner.getCapability(/public/ZeedzItemsCollection)
-        .borrow<&{ZeedzItems.ZeedzItemsCollectionPublic}>()
-    if col == nil { return nil }
-
-    let nft = col!.borrowZeedzItem(id: id)!
-    if nft == nil { return nil }
-
-    let metadata = nft!.getMetadata()
-
-    return NFTData(
-        contract: contract,
-        id: nft!.id,
-        uuid: nft!.uuid,
-        title: metadata["name"]!,
-        description: metadata["description"]!,
-        external_domain_view_url: "https:/www.zeedz.io",
-        token_uri: nil,
-        media: [NFTMedia(uri: metadata["imageURI"]!, mimetype: "image")],
-        metadata: {            
-            "typeID": nft!.typeID,
-            "serialNumber": metadata["serialNumber"]!,
-            "edition": metadata["edition"]!,
-            "editionCap":metadata["editionCap"]!,
-            "rarity": metadata["rarity"]!,
-            "carbonOffset": metadata["payload"]!
         },
     )
 }
